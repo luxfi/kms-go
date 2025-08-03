@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/infisical/go-sdk/packages/models"
+	"github.com/luxfi/kms-go/packages/models"
 )
 
 // List folders

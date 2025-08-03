@@ -1,11 +1,11 @@
-package infisical
+package kms
 
 import (
 	"os"
 
-	api "github.com/infisical/go-sdk/packages/api/secrets"
-	"github.com/infisical/go-sdk/packages/models"
-	"github.com/infisical/go-sdk/packages/util"
+	api "github.com/luxfi/kms-go/packages/api/secrets"
+	"github.com/luxfi/kms-go/packages/models"
+	"github.com/luxfi/kms-go/packages/util"
 )
 
 type ListSecretsOptions = api.ListSecretsV3RawRequest
@@ -33,11 +33,11 @@ type SecretsInterface interface {
 }
 
 type Secrets struct {
-	client *InfisicalClient
+	client *KMSClient
 }
 
 type BatchSecrets struct {
-	client *InfisicalClient
+	client *KMSClient
 }
 
 func (s *Secrets) List(options ListSecretsOptions) ([]models.Secret, error) {
@@ -134,6 +134,6 @@ func (s *Secrets) Batch() BatchSecretsInterface {
 	return &BatchSecrets{client: s.client}
 }
 
-func NewSecrets(client *InfisicalClient) SecretsInterface {
+func NewSecrets(client *KMSClient) SecretsInterface {
 	return &Secrets{client: client}
 }

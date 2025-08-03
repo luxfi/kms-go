@@ -1,4 +1,4 @@
-package infisical
+package kms
 
 import (
 	"context"
@@ -12,9 +12,9 @@ import (
 	"strings"
 	"time"
 
-	api "github.com/infisical/go-sdk/packages/api/auth"
-	"github.com/infisical/go-sdk/packages/models"
-	"github.com/infisical/go-sdk/packages/util"
+	api "github.com/luxfi/kms-go/packages/api/auth"
+	"github.com/luxfi/kms-go/packages/models"
+	"github.com/luxfi/kms-go/packages/util"
 	"github.com/oracle/oci-go-sdk/v65/common"
 
 	v4 "github.com/aws/aws-sdk-go-v2/aws/signer/v4"
@@ -43,7 +43,7 @@ type AuthInterface interface {
 }
 
 type Auth struct {
-	client *InfisicalClient
+	client *KMSClient
 }
 
 func (a *Auth) SetAccessToken(accessToken string) {
@@ -451,6 +451,6 @@ func (a *Auth) LdapAuthLogin(identityID string, username string, password string
 	return credential, nil
 }
 
-func NewAuth(client *InfisicalClient) AuthInterface {
+func NewAuth(client *KMSClient) AuthInterface {
 	return &Auth{client: client}
 }

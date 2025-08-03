@@ -1,8 +1,8 @@
-package infisical
+package kms
 
 import (
-	api "github.com/infisical/go-sdk/packages/api/dynamic_secrets"
-	"github.com/infisical/go-sdk/packages/models"
+	api "github.com/luxfi/kms-go/packages/api/dynamic_secrets"
+	"github.com/luxfi/kms-go/packages/models"
 )
 
 type ListDynamicSecretLeasesOptions = api.ListDynamicSecretLeaseV1Request
@@ -28,7 +28,7 @@ type DynamicSecretLeaseInterface interface {
 }
 
 type DynamicSecrets struct {
-	client *InfisicalClient
+	client *KMSClient
 	leases DynamicSecretLeaseInterface
 }
 
@@ -57,7 +57,7 @@ func (f *DynamicSecrets) Leases() DynamicSecretLeaseInterface {
 }
 
 type DynamicSecretLeases struct {
-	client *InfisicalClient
+	client *KMSClient
 }
 
 func (f *DynamicSecretLeases) List(options ListDynamicSecretLeasesOptions) ([]models.DynamicSecretLease, error) {
@@ -110,6 +110,6 @@ func (f *DynamicSecretLeases) RenewById(options RenewDynamicSecretLeaseOptions) 
 	return res.Lease, nil
 }
 
-func NewDynamicSecrets(client *InfisicalClient) DynamicSecretsInterface {
+func NewDynamicSecrets(client *KMSClient) DynamicSecretsInterface {
 	return &DynamicSecrets{client: client, leases: &DynamicSecretLeases{client: client}}
 }

@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/infisical/go-sdk/packages/util"
+	"github.com/luxfi/kms-go/packages/util"
 )
 
 type SignSshPublicKeyV1Request struct {

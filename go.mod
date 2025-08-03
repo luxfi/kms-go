@@ -1,4 +1,4 @@
-module github.com/infisical/go-sdk
+module github.com/luxfi/kms-go
 
 go 1.21
 

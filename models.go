@@ -1,9 +1,9 @@
-package infisical
+package kms
 
 import (
-	api "github.com/infisical/go-sdk/packages/api/auth"
-	"github.com/infisical/go-sdk/packages/errors"
-	"github.com/infisical/go-sdk/packages/models"
+	api "github.com/luxfi/kms-go/packages/api/auth"
+	"github.com/luxfi/kms-go/packages/errors"
+	"github.com/luxfi/kms-go/packages/models"
 )
 
 type OciAuthLoginOptions struct {

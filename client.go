@@ -1,4 +1,4 @@
-package infisical
+package kms
 
 import (
 	"context"
@@ -17,12 +17,12 @@ import (
 
 	"github.com/go-resty/resty/v2"
 	"github.com/hashicorp/golang-lru/v2/expirable"
-	api "github.com/infisical/go-sdk/packages/api/auth"
-	"github.com/infisical/go-sdk/packages/models"
-	"github.com/infisical/go-sdk/packages/util"
+	api "github.com/luxfi/kms-go/packages/api/auth"
+	"github.com/luxfi/kms-go/packages/models"
+	"github.com/luxfi/kms-go/packages/util"
 )
 
-type InfisicalClient struct {
+type KMSClient struct {
 	authMethod       util.AuthMethod
 	credential       interface{}
 	tokenDetails     MachineIdentityCredential
@@ -44,7 +44,7 @@ type InfisicalClient struct {
 	ssh            SshInterface
 }
 
-type InfisicalClientInterface interface {
+type KMSClientInterface interface {
 	UpdateConfiguration(config Config)
 	Secrets() SecretsInterface
 	Folders() FoldersInterface
@@ -55,9 +55,9 @@ type InfisicalClientInterface interface {
 }
 
 type Config struct {
-	SiteUrl              string `default:"https://app.infisical.com"`
+	SiteUrl              string `default:"https://app.lux.network"`
 	CaCertificate        string
-	UserAgent            string `default:"infisical-go-sdk"` // User-Agent header to be used on requests sent by the SDK. Defaults to `infisical-go-sdk`. Do not modify this unless you have a reason to do so.
+	UserAgent            string `default:"kms-go-sdk"` // User-Agent header to be used on requests sent by the SDK. Defaults to `kms-go-sdk`. Do not modify this unless you have a reason to do so.
 	AutoTokenRefresh     bool   `default:"true"`             // Wether or not to automatically refresh the auth token after using one of the .Auth() methods. Defaults to `true`.
 	SilentMode           bool   `default:"false"`            // If enabled, the SDK will not print any warnings to the console.
 	CacheExpiryInSeconds int    // Defines how long certain API responses should be cached in memory, in seconds. When set to a positive value, responses from specific fetch API requests (like secret fetching) will be cached for this duration. Set to 0 to disable caching. Defaults to 0.
@@ -94,7 +94,7 @@ func setDefaults(cfg *Config) {
 	}
 }
 
-func (c *InfisicalClient) setAccessToken(tokenDetails MachineIdentityCredential, credential interface{}, authMethod util.AuthMethod) {
+func (c *KMSClient) setAccessToken(tokenDetails MachineIdentityCredential, credential interface{}, authMethod util.AuthMethod) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
@@ -111,7 +111,7 @@ func (c *InfisicalClient) setAccessToken(tokenDetails MachineIdentityCredential,
 	c.httpClient.SetAuthToken(c.tokenDetails.AccessToken)
 }
 
-func (c *InfisicalClient) clearAccessToken() {
+func (c *KMSClient) clearAccessToken() {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
@@ -120,7 +120,7 @@ func (c *InfisicalClient) clearAccessToken() {
 	c.httpClient.SetAuthScheme("")
 	c.httpClient.SetAuthToken("")
 }
-func (c *InfisicalClient) setPlainAccessToken(accessToken string) {
+func (c *KMSClient) setPlainAccessToken(accessToken string) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
@@ -132,8 +132,8 @@ func (c *InfisicalClient) setPlainAccessToken(accessToken string) {
 	c.credential = models.AccessTokenCredential{AccessToken: accessToken}
 }
 
-func NewInfisicalClient(context context.Context, config Config) InfisicalClientInterface {
-	client := &InfisicalClient{}
+func NewKMSClient(context context.Context, config Config) KMSClientInterface {
+	client := &KMSClient{}
 	setDefaults(&config)
 	client.UpdateConfiguration(config) // set httpClient and config
 
@@ -156,7 +156,7 @@ func NewInfisicalClient(context context.Context, config Config) InfisicalClientI
 	return client
 }
 
-func (c *InfisicalClient) UpdateConfiguration(config Config) {
+func (c *KMSClient) UpdateConfiguration(config Config) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
@@ -257,31 +257,31 @@ func (c *InfisicalClient) UpdateConfiguration(config Config) {
 	}
 }
 
-func (c *InfisicalClient) Secrets() SecretsInterface {
+func (c *KMSClient) Secrets() SecretsInterface {
 	return c.secrets
 }
 
-func (c *InfisicalClient) Folders() FoldersInterface {
+func (c *KMSClient) Folders() FoldersInterface {
 	return c.folders
 }
 
-func (c *InfisicalClient) Auth() AuthInterface {
+func (c *KMSClient) Auth() AuthInterface {
 	return c.auth
 }
 
-func (c *InfisicalClient) DynamicSecrets() DynamicSecretsInterface {
+func (c *KMSClient) DynamicSecrets() DynamicSecretsInterface {
 	return c.dynamicSecrets
 }
 
-func (c *InfisicalClient) Kms() KmsInterface {
+func (c *KMSClient) Kms() KmsInterface {
 	return c.kms
 }
 
-func (c *InfisicalClient) Ssh() SshInterface {
+func (c *KMSClient) Ssh() SshInterface {
 	return c.ssh
 }
 
-func (c *InfisicalClient) handleTokenLifeCycle(context context.Context) {
+func (c *KMSClient) handleTokenLifeCycle(context context.Context) {
 	var warningPrinted = false
 	authStrategies := map[util.AuthMethod]func(cred interface{}) (credential MachineIdentityCredential, err error){
 		util.UNIVERSAL_AUTH: func(cred interface{}) (credential MachineIdentityCredential, err error) {

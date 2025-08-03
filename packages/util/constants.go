@@ -82,7 +82,7 @@ const (
 
 // General:
 const (
-	DEFAULT_INFISICAL_API_URL                     = "https://app.infisical.com/api"
+	DEFAULT_INFISICAL_API_URL                     = "https://app.lux.network/api"
 	DEFAULT_KUBERNETES_SERVICE_ACCOUNT_TOKEN_PATH = "/var/run/secrets/kubernetes.io/serviceaccount/token"
 )
 

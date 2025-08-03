@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"testing"
 
-	infisical "github.com/infisical/go-sdk"
+	kms "github.com/luxfi/kms-go"
 )
 
 func TestAWSAuthLogin(t *testing.T) {
 
-	client := infisical.NewInfisicalClient(context.Background(), infisical.Config{
+	client := kms.NewKMSClient(context.Background(), kms.Config{
 		SiteUrl: "https://c61b724baab4.ngrok.app",
 	})
 

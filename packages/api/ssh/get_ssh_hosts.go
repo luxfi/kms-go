@@ -2,7 +2,7 @@ package api
 
 import (
 	"github.com/go-resty/resty/v2"
-	"github.com/infisical/go-sdk/packages/errors"
+	"github.com/luxfi/kms-go/packages/errors"
 )
 
 const callGetSshHostsOperation = "CallGetSshHostsV1"

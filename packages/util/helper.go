@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/go-resty/resty/v2"
-	"github.com/infisical/go-sdk/packages/models"
+	"github.com/luxfi/kms-go/packages/models"
 )
 
 func AppendAPIEndpoint(siteUrl string) string {
@@ -29,7 +29,7 @@ func AppendAPIEndpoint(siteUrl string) string {
 }
 
 func PrintWarning(message string) {
-	fmt.Fprintf(os.Stderr, "[Infisical] Warning: %v \n", message)
+	fmt.Fprintf(os.Stderr, "[KMS] Warning: %v \n", message)
 }
 
 func EnsureUniqueSecretsByKey(secrets *[]models.Secret) {
