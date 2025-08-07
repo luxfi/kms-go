@@ -1,8 +1,5 @@
-<h1 align="center">
-  <img width="300" src="./resources/logo.svg#gh-dark-mode-only" alt="kms">
-</h1>
 <p align="center">
-  <p align="center"><b>KMS Go SDK </b>
+  <p align="center"><b>Lux KMS Go SDK </b>
 </p>
 <h4 align="center">
   <a href="https://lux.network/slack">Slack</a> |
