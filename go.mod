@@ -1,6 +1,6 @@
 module github.com/kms/go-sdk
 
-go 1.25.5
+go 1.26
 
 require (
 	cloud.google.com/go/iam v1.5.3
